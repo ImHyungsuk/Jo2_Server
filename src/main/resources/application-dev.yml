@@ -1,16 +1,17 @@
 spring:
   config:
+    activate:
+      on-profile: dev
     import: application-secret.yml
   datasource:
-    url: jdbc:mysql://${DATABASE.ENDPOINT_URL}:3306/mysql?currentSchema=${DATABASE.NAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DATABASE.ENDPOINT_URL}:3306/${DATABASE.NAME}
     username: ${DATABASE.USERNAME}
     password: ${DATABASE.PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    jpa:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          format_sql: true
-          default_batch_fetch_size: 1000
-          auto_quote_keyword: true
+        dialect: org.hibernate.dialect.MySQLDialect
