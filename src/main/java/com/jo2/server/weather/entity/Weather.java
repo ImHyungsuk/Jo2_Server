@@ -5,6 +5,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import com.jo2.server.common.entity.BaseTime;
 import com.jo2.server.member.entity.Member;
 import jakarta.persistence.*;
+import java.time.DayOfWeek;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,18 +27,29 @@ public class Weather extends BaseTime {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    private int score;
+
+    @Embedded
+    private ScoreVO scoreVO;
+
     private LocalDate date;
+
+    private DayOfWeek dayOfWeek;
+
+    private String result;
 
     public static Weather of(
             Member member,
             int score,
-            LocalDate date
-    ){
+            LocalDate date,
+            String result
+    ) {
         return Weather.builder()
                 .member(member)
-                .score(score)
+                .scoreVO(ScoreVO.from(score))
                 .date(date)
+                .dayOfWeek(date.getDayOfWeek())
+                .result(result)
                 .build();
     }
+
 }
