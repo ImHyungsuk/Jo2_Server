@@ -1,7 +1,18 @@
 package com.jo2.server.weather.controller;
 
+import static com.jo2.server.common.dto.SuccessResponse.success;
+import static com.jo2.server.weather.message.SuccessMessage.SUCCESS_GET_ALL_RESULT;
+import static com.jo2.server.weather.message.SuccessMessage.SUCCESS_GET_RECENT_RESULT;
+
+import com.jo2.server.common.dto.SuccessResponse;
+import com.jo2.server.weather.dto.reponse.AllWeatherResponse;
+import com.jo2.server.weather.dto.reponse.RecentWeatherResponse;
 import com.jo2.server.weather.service.WeatherService;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,4 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
 
     private final WeatherService weatherService;
+
+    @GetMapping
+    public ResponseEntity<SuccessResponse<AllWeatherResponse>> getResult(Principal principal) {
+        long memberId = Long.parseLong(principal.getName());
+        AllWeatherResponse response = weatherService.getAllWeather(memberId);
+        return ResponseEntity.ok().body(success(SUCCESS_GET_ALL_RESULT.getMessage(), response));
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<SuccessResponse<RecentWeatherResponse>> getRecentResult(Principal principal) {
+        long memberId = Long.parseLong(principal.getName());
+        RecentWeatherResponse response = weatherService.getRecentWeather(memberId);
+        return ResponseEntity.ok().body(success(SUCCESS_GET_RECENT_RESULT.getMessage(), response));
+    }
 }
