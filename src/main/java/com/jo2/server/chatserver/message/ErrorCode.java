@@ -1,4 +1,4 @@
-package com.jo2.server.chatting.message;
+package com.jo2.server.chatserver.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
