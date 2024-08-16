@@ -6,7 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum SuccessMessage {
-    TEMP("임시코드");
+    SUCCESS_GET_RECENT_RESULT("최근 날씨 불러오기 성공"),
+    SUCCESS_GET_ALL_RESULT("전체 날씨 불러오기 성공");
 
     private final String message;
 }
