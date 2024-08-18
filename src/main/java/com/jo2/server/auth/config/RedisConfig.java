@@ -16,16 +16,20 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
     @Value("${spring.data.redis.host}")
-    private String redisHost;
+    private String host;
     @Value("${spring.data.redis.port}")
-    private int redisPort;
-    private static final String REDISSON_HOST_PREFIX = "redis://";
+    private int port;
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(host, port);
+    }
 
     @Bean
-    RedissonClient getRedissonClient() {
-        Config config = new Config();
-        config.useSingleServer()
-                .setAddress(REDISSON_HOST_PREFIX + redisHost + ":" + redisPort);
-        return Redisson.create(config);
+    public RedisTemplate<String, Map<String, String>> redisEmailAuthenticationTemplate() {
+        RedisTemplate<String, Map<String, String>> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        return redisTemplate;
     }
 }
