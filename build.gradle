@@ -37,7 +37,8 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0'
+	implementation platform('org.springframework.cloud:spring-cloud-dependencies:2023.0.3')
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
@@ -49,16 +50,6 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.1'
-}
-ext {
-	set('springCloudVersion', "2023.0.0")
-}
-dependencyManagement {
-
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-
 }
 
 tasks.named('test') {
