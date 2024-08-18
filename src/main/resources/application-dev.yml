@@ -15,3 +15,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+KAKAO:
+  clientId: ${SOCIAL.KAKAO.clientId}
+GOOGLE:
+  clientId: ${SOCIAL.GOOGLE.clientId}
+  clientSecret: ${SOCIAL.GOOGLE.clientSecret}

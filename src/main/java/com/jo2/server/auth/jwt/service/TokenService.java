@@ -6,7 +6,6 @@ import com.jo2.server.auth.jwt.repository.TokenRepository;
 import com.jo2.server.auth.message.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
