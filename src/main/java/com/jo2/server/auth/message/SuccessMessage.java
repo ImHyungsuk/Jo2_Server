@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SuccessMessage {
-    TEMP("임시 코드");
+    SUCCESS_SIGN_IN_INFOR("로그인 성공");
     private final String message;
 }

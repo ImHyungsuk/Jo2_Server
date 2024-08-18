@@ -3,10 +3,12 @@ package com.jo2.server.member.entity;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+import com.jo2.server.auth.social.SocialType;
 import com.jo2.server.common.entity.BaseTime;
 import com.jo2.server.member.entity.enums.Gender;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -29,31 +31,28 @@ public class Member extends BaseTime {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
+    private String socialId;
 
     private String email;
 
-    private String password;
-
-    @Enumerated(value = STRING)
-    private Gender gender;
-
-    private LocalDate birth;
+//    @Enumerated(value = STRING)
+//    private Gender gender;
+//
+//    private LocalDate birth;
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
 
     public static Member of(
             String email,
-            String password,
-            String name,
-            LocalDate birth,
-            Gender gender
+            String socialId,
+            SocialType socialType
             ) {
 
         return Member.builder()
                 .email(email)
-                .password(password)
-                .name(name)
-                .birth(birth)
-                .gender(gender)
+                .socialId(socialId)
+                .email(email)
+                .socialType(socialType)
                 .build();
     }
 }
