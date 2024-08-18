@@ -41,6 +41,7 @@ public class KaKaoSocialStrategy implements SignInStrategy {
         KakaoUserResponse response = getUserInfo(accessToken);
         return getLoginDto(signInRequest.socialType(), response.id(), response.kakaoAccount().profile().accountEmail());
     }
+
     private String getOAuth2Authentication(
             final String redirectUri,
             final String authorizationCode
