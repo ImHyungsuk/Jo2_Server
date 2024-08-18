@@ -9,4 +9,5 @@ import lombok.RequiredArgsConstructor;
 public class MemberSaver {
 
     private final MemberRepository memberRepository;
+
 }
