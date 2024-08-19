@@ -11,7 +11,18 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  data:
+    redis:
+      host: ${REDIS.host}
+      port: 6379
+jwt:
+  secret : ${JWT.SECRET}
+KAKAO:
+  clientId: ${SOCIAL.KAKAO.clientId}
+GOOGLE:
+  clientId: ${SOCIAL.GOOGLE.clientId}
+  clientSecret: ${SOCIAL.GOOGLE.clientSecret}
