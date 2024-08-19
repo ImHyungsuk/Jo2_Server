@@ -25,6 +25,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenService tokenService;
 
+    @Transactional
     public SignInGetResponse create(
             final String authorizationCode,
             final UserSignInRequest signInRequest
