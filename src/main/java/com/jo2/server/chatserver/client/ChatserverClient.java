@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@FeignClient(name = "chatserverClient",url = "http://localhost:5000/chatbot")
+@FeignClient(name = "chatserverClient",url = "http://3.34.120.240:5000/api/chatbot")
 public interface ChatserverClient {
 
     @PostMapping(value = "/start")
