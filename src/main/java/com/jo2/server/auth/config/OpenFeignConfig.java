@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableFeignClients("com.jo2.server.auth")
+@EnableFeignClients("com.jo2.server")
 @ImportAutoConfiguration(FeignAutoConfiguration.class)
 public class OpenFeignConfig {
 }

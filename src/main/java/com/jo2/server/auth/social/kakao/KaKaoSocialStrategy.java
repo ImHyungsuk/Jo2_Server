@@ -36,22 +36,30 @@ public class KaKaoSocialStrategy implements SignInStrategy {
         try {
             accessToken = getOAuth2Authentication(signInRequest.redirectUri(), authorizationCode);
         } catch (FeignException e) {
+            System.out.println(e);
             throw new AuthException(ErrorCode.AUTHENTICATION_CODE_EXPIRED);
         }
         KakaoUserResponse response = getUserInfo(accessToken);
-        return getLoginDto(signInRequest.socialType(), response.id(), response.kakaoAccount().profile().accountEmail());
+        System.out.println(response);
+        return getLoginDto(signInRequest.socialType(), response.id(), response.kakaoAccount().profile().nickname());
     }
 
     private String getOAuth2Authentication(
             final String redirectUri,
             final String authorizationCode
     ) {
+        System.out.println("!");
+        System.out.println(AUTH_CODE);
+        System.out.println(clientId);
+        System.out.println(redirectUri);
+        System.out.println(authorizationCode);
         KakaoAccessTokenResponse response = kakaoAccessTokenClient.getOAuth2AccessToken(
                 AUTH_CODE,
                 clientId,
                 redirectUri,
                 authorizationCode
         );
+        System.out.println(response.toString());
         return "Bearer " + response.accessToken();
     }
 

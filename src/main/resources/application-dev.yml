@@ -19,6 +19,8 @@ spring:
     redis:
       host: ${REDIS.host}
       port: 6379
+jwt:
+  secret : ${JWT.SECRET}
 KAKAO:
   clientId: ${SOCIAL.KAKAO.clientId}
 GOOGLE:
