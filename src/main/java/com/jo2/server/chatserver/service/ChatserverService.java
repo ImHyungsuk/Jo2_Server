@@ -3,6 +3,7 @@ package com.jo2.server.chatserver.service;
 import com.jo2.server.analysis.adapter.AnalysisSaver;
 import com.jo2.server.analysis.entity.Analysis;
 import com.jo2.server.chatserver.client.ChatserverClient;
+import com.jo2.server.chatserver.client.dto.ChatserverAnalysisRequest;
 import com.jo2.server.chatserver.dto.response.ChatserverAnalysisResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverStartResponse;
 import com.jo2.server.member.adapter.MemberFinder;
@@ -33,7 +34,8 @@ public class ChatserverService {
     public ChatserverAnalysisResponse requestAnalysis(long memberId) {
         WeatherList weatherList = weatherFinder.findAllById(memberId);
         long weatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
-        ChatserverAnalysisResponse response = chatserverClient.analysis(memberId, weatherList);
+        ChatserverAnalysisResponse response = chatserverClient.analysis(
+                ChatserverAnalysisRequest.from(memberId, weatherList));
 
         Optional<Member> member = memberFinder.findById(memberId);
         analysisSaver.save(createAnalysis(member.get(), response.result(), weatherId));
