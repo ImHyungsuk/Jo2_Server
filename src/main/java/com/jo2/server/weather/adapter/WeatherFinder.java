@@ -4,6 +4,9 @@ import com.jo2.server.common.support.RepositoryAdapter;
 import com.jo2.server.weather.entity.Weather;
 import com.jo2.server.weather.entity.WeatherList;
 import com.jo2.server.weather.repository.WeatherRepository;
+
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
@@ -18,5 +21,9 @@ public class WeatherFinder {
 
     public WeatherList findAllById(long memberId){
         return WeatherList.from(weatherRepository.findAllById(memberId));
+    }
+
+    public List<String> findByMemberIdAndDateBetween(long memberId, LocalDate start, LocalDate now){
+        return weatherRepository.findByMemberIdAndDateBetween(memberId, start, now);
     }
 }

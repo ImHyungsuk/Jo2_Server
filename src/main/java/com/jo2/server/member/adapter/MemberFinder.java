@@ -9,6 +9,7 @@ import com.jo2.server.member.entity.Member;
 import com.jo2.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
 
 @RepositoryAdapter
 @RequiredArgsConstructor
@@ -16,6 +17,9 @@ public class MemberFinder {
 
     private final MemberRepository memberRepository;
 
+    public Optional<Member> findById(long memberId) {
+        return memberRepository.findById(memberId);
+    }
     public boolean isExistingUser(
             final String socialId,
             final SocialType socialType
@@ -32,12 +36,4 @@ public class MemberFinder {
         );
     }
 
-//    public User findById(
-//            Long userId
-//    ) {
-//        return userRepository.findById(userId)
-//                .orElseThrow(
-//                        () -> new NotFoundException(ErrorMessage.USER_NOT_FOUND)
-//                );
-//    }
 }

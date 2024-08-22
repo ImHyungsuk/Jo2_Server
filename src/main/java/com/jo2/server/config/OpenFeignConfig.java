@@ -1,4 +1,4 @@
-package com.jo2.server.auth.config;
+package com.jo2.server.config;
 
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;

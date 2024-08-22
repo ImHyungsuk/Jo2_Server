@@ -5,15 +5,11 @@ import com.jo2.server.analysis.repository.AnalysisRepository;
 import com.jo2.server.common.support.RepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @RepositoryAdapter
 @RequiredArgsConstructor
-public class AnalysisFinder {
+public class AnalysisDeleter {
 
     private final AnalysisRepository analysisRepository;
 
-    public Optional<Analysis> findAnalysis(Long memberId){
-        return analysisRepository.findByMemberId(memberId);
-    }
+    public void delete(Long analysisId){analysisRepository.deleteById(analysisId);}
 }
