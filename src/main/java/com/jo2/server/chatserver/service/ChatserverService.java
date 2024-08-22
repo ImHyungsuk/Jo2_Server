@@ -1,6 +1,8 @@
 package com.jo2.server.chatserver.service;
 
-import com.jo2.server.analysis.adapter.AnalysisSaver;
+import com.jo2.server.analysis.adapter.AnalysisCreator;
+import com.jo2.server.analysis.adapter.AnalysisDeleter;
+import com.jo2.server.analysis.adapter.AnalysisFinder;
 import com.jo2.server.analysis.entity.Analysis;
 import com.jo2.server.chatserver.client.ChatserverClient;
 import com.jo2.server.chatserver.client.dto.ChatserverAnalysisRequest;
@@ -24,7 +26,9 @@ public class ChatserverService {
     private final ChatserverClient chatserverClient;
     private final MemberFinder memberFinder;
     private final WeatherFinder weatherFinder;
-    private final AnalysisSaver analysisSaver;
+    private final AnalysisFinder analysisFinder;
+    private final AnalysisCreator analysisCreator;
+    private final AnalysisDeleter analysisDeleter;
 
     public ChatserverStartResponse startChatserver(long memberId) {
         ChatserverStartResponse response = chatserverClient.startServer(memberId);
@@ -36,14 +40,13 @@ public class ChatserverService {
         long weatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
         ChatserverAnalysisResponse response = chatserverClient.analysis(
                 ChatserverAnalysisRequest.from(memberId, weatherList));
-
         Optional<Member> member = memberFinder.findById(memberId);
-        analysisSaver.save(createAnalysis(member.get(), response.result(), weatherId));
+        Optional<Analysis> analysis = analysisFinder.findAnalysis(memberId);
+        if(analysis.isPresent()) {
+            analysisDeleter.delete(analysis.get().getId());
+        }
+        analysisCreator.createAnalysis(member.get(),weatherId, response.result());
 
         return response;
-    }
-
-    private Analysis createAnalysis(Member member, String result, long weatherId) {
-        return Analysis.of(member, weatherId, result);
     }
 }
