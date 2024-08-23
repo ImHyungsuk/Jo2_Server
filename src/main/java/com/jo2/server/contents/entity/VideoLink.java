@@ -46,7 +46,7 @@ public enum VideoLink {
             if(idPart ==null){
                 throw new NullPointerException();
             }
-            String imageLink = " https://img.youtube.com/vi/" + idPart + "/0.jpg";
+            String imageLink = " https://img.youtube.com/vi/" + idPart + "/maxresdefault.jpg";
             return new VideoCard(link,imageLink,title);
         }
     }
