@@ -5,6 +5,7 @@ import static com.jo2.server.contents.message.SuccessMessage.SUCCESS_MAIN_SENTEN
 import static com.jo2.server.contents.message.SuccessMessage.SUCCESS_VIDEO_CARDS;
 
 import com.jo2.server.common.dto.SuccessResponse;
+import com.jo2.server.common.resolver.member.MemberId;
 import com.jo2.server.contents.dto.reponse.MainSentenceGetResponse;
 import com.jo2.server.contents.dto.reponse.VideoCardsGetResponse;
 import com.jo2.server.contents.service.ContentsService;
@@ -23,13 +24,13 @@ public class ContentsController {
     private final ContentsService contentsService;
 
     @GetMapping("/main-sentence")
-    public ResponseEntity<SuccessResponse<MainSentenceGetResponse>> mainSentenceGetResponse() {
+    public ResponseEntity<SuccessResponse<MainSentenceGetResponse>> mainSentenceGetResponse(@MemberId final Long memberId) {
         MainSentenceGetResponse response= contentsService.getMainSentence();
         return ResponseEntity.ok().body(success(SUCCESS_MAIN_SENTENCES.getMessage(), response));
     }
 
     @GetMapping("/video-links")
-    public ResponseEntity<SuccessResponse<VideoCardsGetResponse>> videoLinksGetResponse () {
+    public ResponseEntity<SuccessResponse<VideoCardsGetResponse>> videoLinksGetResponse (@MemberId final Long memberId) {
         VideoCardsGetResponse response= contentsService.getVideoCards();
         return ResponseEntity.ok().body(success(SUCCESS_VIDEO_CARDS.getMessage(), response));
     }
