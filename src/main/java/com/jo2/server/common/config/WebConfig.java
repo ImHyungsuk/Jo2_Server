@@ -1,18 +1,17 @@
 package com.jo2.server.common.config;
+import com.jo2.server.common.resolver.member.MemberIdHeaderResolver;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
+
+    private final MemberIdHeaderResolver memberIdHeaderResolver;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -23,5 +22,10 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS")
                 .allowCredentials(true)
                 .maxAge(3000);
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers){
+        resolvers.add(memberIdHeaderResolver);
     }
 }
