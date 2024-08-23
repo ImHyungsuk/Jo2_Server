@@ -8,6 +8,7 @@ import com.jo2.server.chatserver.dto.response.ChatserverAnalysisResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverStartResponse;
 import com.jo2.server.chatserver.service.ChatserverService;
 import com.jo2.server.common.dto.SuccessResponse;
+import com.jo2.server.common.resolver.member.MemberId;
 import com.jo2.server.member.entity.Member;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,18 +25,14 @@ public class ChatserverController {
     private final ChatserverService chatserverService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<?>> startChatting(Principal principal) {
-        long memberId = Long.parseLong(principal.getName());
+    public ResponseEntity<SuccessResponse<?>> startChatting(@MemberId final Long memberId) {;
         ChatserverStartResponse response = chatserverService.startChatserver(memberId);
-
         return ResponseEntity.ok().body(success(SUCCESS_START_CHATTING.getMessage(), response));
     }
 
     @GetMapping("/analysis")
-    public ResponseEntity<SuccessResponse<?>>analysis(Principal principal){
-        long memberId = Long.parseLong(principal.getName());
+    public ResponseEntity<SuccessResponse<?>>analysis(@MemberId final Long memberId){
         ChatserverAnalysisResponse response = chatserverService.requestAnalysis(memberId);
-
         return ResponseEntity.ok().body(success(SUCCESS_ANALYSIS.getMessage(), response));
     }
 }
