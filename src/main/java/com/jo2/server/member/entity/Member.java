@@ -33,7 +33,7 @@ public class Member extends BaseTime {
 
     private String socialId;
 
-    private String email;
+    private String nickname;
 
 //    @Enumerated(value = STRING)
 //    private Gender gender;
@@ -43,15 +43,14 @@ public class Member extends BaseTime {
     private SocialType socialType;
 
     public static Member of(
-            String email,
+            String nickname,
             String socialId,
             SocialType socialType
             ) {
 
         return Member.builder()
-                .email(email)
+                .nickname(nickname)
                 .socialId(socialId)
-                .email(email)
                 .socialType(socialType)
                 .build();
     }
