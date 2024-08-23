@@ -13,9 +13,11 @@ import com.jo2.server.auth.strategy.dto.UserInfoResponse;
 import feign.FeignException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KaKaoSocialStrategy implements SignInStrategy {
@@ -36,11 +38,10 @@ public class KaKaoSocialStrategy implements SignInStrategy {
         try {
             accessToken = getOAuth2Authentication(signInRequest.redirectUri(), authorizationCode);
         } catch (FeignException e) {
-            System.out.println(e);
+            log.info(String.valueOf(e));
             throw new AuthException(ErrorCode.AUTHENTICATION_CODE_EXPIRED);
         }
         KakaoUserResponse response = getUserInfo(accessToken);
-        System.out.println(response);
         return getLoginDto(signInRequest.socialType(), response.id(), response.kakaoAccount().profile().nickname());
     }
 
@@ -48,18 +49,12 @@ public class KaKaoSocialStrategy implements SignInStrategy {
             final String redirectUri,
             final String authorizationCode
     ) {
-        System.out.println("!");
-        System.out.println(AUTH_CODE);
-        System.out.println(clientId);
-        System.out.println(redirectUri);
-        System.out.println(authorizationCode);
         KakaoAccessTokenResponse response = kakaoAccessTokenClient.getOAuth2AccessToken(
                 AUTH_CODE,
                 clientId,
                 redirectUri,
                 authorizationCode
         );
-        System.out.println(response.toString());
         return "Bearer " + response.accessToken();
     }
 
@@ -76,12 +71,12 @@ public class KaKaoSocialStrategy implements SignInStrategy {
     public UserInfoResponse getLoginDto(
             final SocialType socialType,
             final Long socialId,
-            final String email
+            final String nickname
     ) {
         return UserInfoResponse.of(
                 socialId.toString(),
                 socialType,
-                email
+                nickname
         );
     }
 }
