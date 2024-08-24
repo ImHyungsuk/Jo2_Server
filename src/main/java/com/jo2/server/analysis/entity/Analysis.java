@@ -37,4 +37,10 @@ public class Analysis extends BaseTime {
                 .result(result)
                 .build();
     }
+
+    public void updateResult(String summary,Long weatherId)
+    {
+        this.result = summary;
+        this.weatherId = weatherId;
+    }
 }

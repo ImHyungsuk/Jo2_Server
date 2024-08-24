@@ -1,8 +1,7 @@
 package com.jo2.server.chatserver.service;
 
-import com.jo2.server.analysis.adapter.AnalysisCreator;
-import com.jo2.server.analysis.adapter.AnalysisDeleter;
 import com.jo2.server.analysis.adapter.AnalysisFinder;
+import com.jo2.server.analysis.adapter.AnalysisSaver;
 import com.jo2.server.analysis.entity.Analysis;
 import com.jo2.server.chatserver.client.ChatserverClient;
 import com.jo2.server.chatserver.client.dto.ChatserverAnalysisRequest;
@@ -27,26 +26,28 @@ public class ChatserverService {
     private final MemberFinder memberFinder;
     private final WeatherFinder weatherFinder;
     private final AnalysisFinder analysisFinder;
-    private final AnalysisCreator analysisCreator;
-    private final AnalysisDeleter analysisDeleter;
+    private final AnalysisSaver analysisSaver;
 
     public ChatserverStartResponse startChatserver(long memberId) {
-        ChatserverStartResponse response = chatserverClient.startServer(memberId);
-        return response;
+        return chatserverClient.startServer(memberId);
     }
 
+    @Transactional
     public ChatserverAnalysisResponse requestAnalysis(long memberId) {
         WeatherList weatherList = weatherFinder.findAllById(memberId);
         long weatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
-        ChatserverAnalysisResponse response = chatserverClient.analysis(
-                ChatserverAnalysisRequest.from(memberId, weatherList));
         Optional<Member> member = memberFinder.findById(memberId);
-        Optional<Analysis> analysis = analysisFinder.findAnalysis(memberId);
-        if(analysis.isPresent()) {
-            analysisDeleter.delete(analysis.get().getId());
-        }
-        analysisCreator.createAnalysis(member.get(),weatherId, response.result());
+        Optional<Analysis> optionalAnalysis=analysisFinder.findAnalysis(memberId);
 
+        ChatserverAnalysisResponse response = chatserverClient.analysis(
+                ChatserverAnalysisRequest.of(memberId, weatherList));
+
+        if (optionalAnalysis.isPresent()) {
+            Analysis analysis = optionalAnalysis.get();
+            analysis.updateResult(response.result(), weatherId);
+        } else {
+            analysisSaver.createAnalysis(member.get(), weatherId, response.result());
+        }
         return response;
     }
 }

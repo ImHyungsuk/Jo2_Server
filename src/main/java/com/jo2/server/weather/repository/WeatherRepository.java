@@ -15,7 +15,4 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
     Optional<Weather> findTopByMemberIdOrderByCreatedAtDesc(@Param("memberId") Long memberId);
 
     List<Weather> findAllById(Long memberId);
-
-    @Query("SELECT w.result FROM Weather w WHERE w.member.id = :memberId AND w.date BETWEEN :start AND :now ORDER BY w.date DESC")
-    List<String> findByMemberIdAndDateBetween(@Param("memberId") Long memberId, @Param("start") LocalDate start, @Param("now") LocalDate now);
 }

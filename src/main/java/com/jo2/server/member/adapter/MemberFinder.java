@@ -17,7 +17,7 @@ public class MemberFinder {
 
     private final MemberRepository memberRepository;
 
-    public Optional<Member> findById(long memberId) {
+    public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);
     }
     public boolean isExistingUser(

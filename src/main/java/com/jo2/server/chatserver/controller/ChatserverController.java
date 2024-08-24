@@ -25,13 +25,13 @@ public class ChatserverController {
     private final ChatserverService chatserverService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<?>> startChatting(@MemberId final Long memberId) {;
+    public ResponseEntity<SuccessResponse<ChatserverStartResponse>> startChatting(@MemberId final Long memberId) {;
         ChatserverStartResponse response = chatserverService.startChatserver(memberId);
         return ResponseEntity.ok().body(success(SUCCESS_START_CHATTING.getMessage(), response));
     }
 
     @GetMapping("/analysis")
-    public ResponseEntity<SuccessResponse<?>>analysis(@MemberId final Long memberId){
+    public ResponseEntity<SuccessResponse<ChatserverAnalysisResponse>>analysis(@MemberId final Long memberId){
         ChatserverAnalysisResponse response = chatserverService.requestAnalysis(memberId);
         return ResponseEntity.ok().body(success(SUCCESS_ANALYSIS.getMessage(), response));
     }
