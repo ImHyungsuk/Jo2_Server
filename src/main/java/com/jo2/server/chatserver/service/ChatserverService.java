@@ -37,7 +37,7 @@ public class ChatserverService {
         WeatherList weatherList = weatherFinder.findAllById(memberId);
         long weatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
         Optional<Member> member = memberFinder.findById(memberId);
-        Optional<Analysis> optionalAnalysis=analysisFinder.findAnalysis(memberId);
+        Optional<Analysis> optionalAnalysis = analysisFinder.findAnalysis(memberId);
 
         ChatserverAnalysisResponse response = chatserverClient.analysis(
                 ChatserverAnalysisRequest.of(memberId, weatherList));
