@@ -13,7 +13,7 @@ public class AnalysisFinder {
 
     private final AnalysisRepository analysisRepository;
 
-    public Optional<Analysis> findAnalysis(Long memberId){
+    public Optional<Analysis> findAnalysisByMemberId(Long memberId){
         return analysisRepository.findByMemberId(memberId);
     }
 }

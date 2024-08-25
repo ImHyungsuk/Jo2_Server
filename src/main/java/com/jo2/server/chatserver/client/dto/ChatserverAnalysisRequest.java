@@ -6,7 +6,7 @@ public record ChatserverAnalysisRequest(
         long user_id,
         WeatherList weatherList
 ) {
-    public static ChatserverAnalysisRequest from(Long user_id, WeatherList weatherList) {
+    public static ChatserverAnalysisRequest of(Long user_id, WeatherList weatherList) {
         return new ChatserverAnalysisRequest(user_id, weatherList);
     }
 }
