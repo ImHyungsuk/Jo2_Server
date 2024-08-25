@@ -12,6 +12,7 @@ import com.jo2.server.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,12 @@ public class WeatherController {
 
     @GetMapping("/recent")
     public ResponseEntity<SuccessResponse<RecentWeatherResponse>> getRecentResult(@MemberId final Long memberId) {
+        RecentWeatherResponse response = weatherService.getRecentWeather(memberId);
+        return ResponseEntity.ok().body(success(SUCCESS_GET_RECENT_RESULT.getMessage(), response));
+    }
+
+    @PostMapping
+    public ResponseEntity<SuccessResponse<RecentWeatherResponse>> saveWeather(@MemberId final Long memberId) {
         RecentWeatherResponse response = weatherService.getRecentWeather(memberId);
         return ResponseEntity.ok().body(success(SUCCESS_GET_RECENT_RESULT.getMessage(), response));
     }
