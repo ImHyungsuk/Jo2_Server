@@ -4,6 +4,7 @@ import static com.jo2.server.chatserver.message.SuccessMessage.SUCCESS_ANALYSIS;
 import static com.jo2.server.common.dto.SuccessResponse.success;
 import static com.jo2.server.chatserver.message.SuccessMessage.SUCCESS_START_CHATTING;
 
+import com.jo2.server.analysis.dto.AnalysisResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverAnalysisResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverStartResponse;
 import com.jo2.server.chatserver.service.ChatserverService;
@@ -31,8 +32,8 @@ public class ChatserverController {
     }
 
     @GetMapping("/analysis")
-    public ResponseEntity<SuccessResponse<ChatserverAnalysisResponse>>analysis(@MemberId final Long memberId){
-        ChatserverAnalysisResponse response = chatserverService.requestAnalysis(memberId);
+    public ResponseEntity<SuccessResponse<AnalysisResponse>>analysis(@MemberId final Long memberId){
+        AnalysisResponse response = chatserverService.getAnalysis(memberId);
         return ResponseEntity.ok().body(success(SUCCESS_ANALYSIS.getMessage(), response));
     }
 }

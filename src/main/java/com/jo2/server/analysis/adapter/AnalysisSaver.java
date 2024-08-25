@@ -2,12 +2,12 @@ package com.jo2.server.analysis.adapter;
 
 import com.jo2.server.analysis.entity.Analysis;
 import com.jo2.server.analysis.repository.AnalysisRepository;
-import com.jo2.server.common.support.RepositoryAdapter;
 import com.jo2.server.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@RepositoryAdapter
+@Component
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnalysisSaver {
     private final AnalysisRepository analysisRepository;
