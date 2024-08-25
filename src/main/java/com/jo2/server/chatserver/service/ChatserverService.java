@@ -6,6 +6,7 @@ import com.jo2.server.analysis.dto.AnalysisResponse;
 import com.jo2.server.analysis.entity.Analysis;
 import com.jo2.server.chatserver.client.ChatserverClient;
 import com.jo2.server.chatserver.client.dto.ChatserverAnalysisRequest;
+import com.jo2.server.chatserver.dto.request.ChatServerStartRequest;
 import com.jo2.server.chatserver.dto.response.ChatserverAnalysisResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverStartResponse;
 import com.jo2.server.member.adapter.MemberFinder;
@@ -35,8 +36,8 @@ public class ChatserverService {
     private final AnalysisFinder analysisFinder;
     private final AnalysisSaver analysisSaver;
 
-    public ChatserverStartResponse startChatserver(long memberId) {
-        return chatserverClient.startServer(memberId);
+    public ChatserverStartResponse startChatserver(Long memberId) {
+        return chatserverClient.startServer(ChatServerStartRequest.from(memberId.intValue()));
     }
 
     @Transactional
