@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    RANGE_EXCEPTION(HttpStatus.BAD_REQUEST, "점수의 범위는 1부터 100까지 입니다.");
+    RANGE_EXCEPTION(HttpStatus.BAD_REQUEST, "점수의 범위는 1부터 100까지 입니다."),
+    NO_WEATHER_EXCEPTION(HttpStatus.BAD_REQUEST, "날씨 기록이 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;
