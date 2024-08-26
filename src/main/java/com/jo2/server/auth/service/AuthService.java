@@ -85,7 +85,8 @@ public class AuthService {
         return SignInGetResponse.of(
                 jwtTokenProvider.issueAccessToken(id),
                 refreshToken,
-                nickname
+                nickname,
+                id
         );
     }
 }
