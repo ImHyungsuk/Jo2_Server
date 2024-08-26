@@ -4,9 +4,9 @@ public record SignInGetResponse(
         String accessToken,
         String refreshToken,
         String nickname,
-        Long user_id
+        Long memberId
 ) {
-    public static SignInGetResponse of(final String accessToken, final String refreshToken, String nickname, Long user_id) {
-        return new SignInGetResponse(accessToken, refreshToken, nickname, user_id);
+    public static SignInGetResponse of(final String accessToken, final String refreshToken, String nickname, Long memberId) {
+        return new SignInGetResponse(accessToken, refreshToken, nickname, memberId);
     }
 }
