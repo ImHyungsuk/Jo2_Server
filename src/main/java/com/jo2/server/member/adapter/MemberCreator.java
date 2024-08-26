@@ -12,9 +12,9 @@ import lombok.AccessLevel;
 public class MemberCreator {
     private final MemberRepository memberRepository;
 
-    public Long createMember(final String socialId, final SocialType socialType, final String email) {
+    public Long createMember(final String socialId, final SocialType socialType, final String nickname) {
         Member member = Member.of(
-                email,
+                nickname,
                 socialId,
                 socialType
         );
