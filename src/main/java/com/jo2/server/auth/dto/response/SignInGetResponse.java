@@ -3,9 +3,10 @@ package com.jo2.server.auth.dto.response;
 public record SignInGetResponse(
         String accessToken,
         String refreshToken,
-        String nickname
+        String nickname,
+        Long memberId
 ) {
-    public static SignInGetResponse of(final String accessToken, final String refreshToken, String nickname) {
-        return new SignInGetResponse(accessToken, refreshToken, nickname);
+    public static SignInGetResponse of(final String accessToken, final String refreshToken, String nickname, Long memberId) {
+        return new SignInGetResponse(accessToken, refreshToken, nickname, memberId);
     }
 }

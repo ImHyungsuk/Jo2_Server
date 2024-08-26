@@ -35,10 +35,6 @@ public class Member extends BaseTime {
 
     private String nickname;
 
-//    @Enumerated(value = STRING)
-//    private Gender gender;
-//
-//    private LocalDate birth;
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 

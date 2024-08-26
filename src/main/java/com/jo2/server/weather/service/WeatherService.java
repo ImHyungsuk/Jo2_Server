@@ -1,12 +1,16 @@
 package com.jo2.server.weather.service;
 
+import com.jo2.server.member.adapter.MemberFinder;
 import com.jo2.server.member.entity.Member;
 import com.jo2.server.weather.adapter.WeatherFinder;
+import com.jo2.server.weather.adapter.WeatherSaver;
 import com.jo2.server.weather.dto.reponse.AllWeatherResponse;
 import com.jo2.server.weather.dto.reponse.RecentWeatherResponse;
+import com.jo2.server.weather.dto.reponse.WeatherCreateResponse;
+import com.jo2.server.weather.dto.request.WeatherCreateRequest;
 import com.jo2.server.weather.entity.Weather;
-import com.jo2.server.weather.entity.WeatherList;
-import java.nio.file.Watchable;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class WeatherService {
 
-    private WeatherFinder weatherFinder;
+    private final WeatherFinder weatherFinder;
+    private final WeatherSaver weatherSaver;
+    private final MemberFinder memberFinder;
 
     public RecentWeatherResponse getRecentWeather(long memberId) {
         Optional<Weather> weather = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId);
@@ -30,7 +36,15 @@ public class WeatherService {
     }
 
     public AllWeatherResponse getAllWeather(long memberId) {
-        WeatherList weatherList = weatherFinder.findAllById(memberId);
+        List<Weather> weatherList = weatherFinder.findAllById(memberId);
         return AllWeatherResponse.from(weatherList);
+    }
+
+    @Transactional
+    public WeatherCreateResponse createWeather(WeatherCreateRequest weatherCreateRequest){
+        Member member = memberFinder.findById(weatherCreateRequest.userId());
+        Weather weather = weatherSaver.save(Weather.of(member,weatherCreateRequest.overallScore(),
+                weatherCreateRequest.overallAnalyze(), LocalDate.now()));
+        return WeatherCreateResponse.from(weather.getId());
     }
 }
