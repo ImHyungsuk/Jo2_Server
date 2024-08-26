@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
-    @Query("SELECT w FROM Weather w WHERE w.member.id = :memberId ORDER BY w.date DESC, w.createdAt DESC")
+    @Query("SELECT w FROM Weather w WHERE w.member.id = :memberId ORDER BY w.createdAt DESC")
     Optional<Weather> findTopByMemberIdOrderByCreatedAtDesc(@Param("memberId") Long memberId);
 
     List<Weather> findAllById(Long memberId);
