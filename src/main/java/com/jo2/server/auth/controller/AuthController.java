@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class AuthController {
 
     @GetMapping("/refresh-token")
     public ResponseEntity<SuccessResponse<ReissueGetResponse>> refreshToken(
-            @RequestParam final String refreshToken
+            @RequestHeader final String refreshToken
     ) {
         ReissueGetResponse response = authService.refreshToken(refreshToken);
         return ResponseEntity.ok().body(success(SUCCESS_SIGN_IN_INFOR.getMessage(), response));
