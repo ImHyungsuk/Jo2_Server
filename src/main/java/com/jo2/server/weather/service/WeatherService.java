@@ -36,9 +36,7 @@ public class WeatherService {
     }
 
     public AllWeatherResponse getAllWeather(long memberId) {
-        System.out.println(memberId);
         List<Weather> weatherList = weatherFinder.findAllById(memberId);
-        System.out.println("!!!");
         return AllWeatherResponse.from(weatherList);
     }
 
