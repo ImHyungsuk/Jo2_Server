@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
-    @ExceptionHandler({WeatherException.class})
+    @ExceptionHandler(WeatherException.class)
     protected ResponseEntity<BaseResponse>weatherException(WeatherException exception) {
         log.error(exception.getMessage());
         val errorCode = exception.getErrorCode();
