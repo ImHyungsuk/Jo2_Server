@@ -18,6 +18,6 @@ public class WeatherFinder {
     }
 
     public List<Weather> findAllById(long memberId){
-        return weatherRepository.findAllById(memberId);
+        return weatherRepository.findAllByMemberId(memberId);
     }
 }
