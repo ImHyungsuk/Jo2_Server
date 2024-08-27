@@ -13,12 +13,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class WeatherService {
 
     private final WeatherFinder weatherFinder;
@@ -26,6 +28,7 @@ public class WeatherService {
     private final MemberFinder memberFinder;
 
     public RecentWeatherResponse getRecentWeather(long memberId) {
+        log.info("접속 멤버 아이디: " + memberId);
         Optional<Weather> weather = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId);
         if (weather.isPresent()) {
             int score = weather.get().getScoreVO().getScore();
@@ -41,9 +44,9 @@ public class WeatherService {
     }
 
     @Transactional
-    public WeatherCreateResponse createWeather(WeatherCreateRequest weatherCreateRequest){
+    public WeatherCreateResponse createWeather(WeatherCreateRequest weatherCreateRequest) {
         Member member = memberFinder.findById(weatherCreateRequest.userId());
-        Weather weather = weatherSaver.save(Weather.of(member,weatherCreateRequest.overallScore(),
+        Weather weather = weatherSaver.save(Weather.of(member, weatherCreateRequest.overallScore(),
                 weatherCreateRequest.overallAnalyze(), LocalDate.now()));
         return WeatherCreateResponse.from(weather.getId());
     }

@@ -1,5 +1,7 @@
 package com.jo2.server.common.resolver.member;
 
+import static com.jo2.server.auth.message.ErrorCode.INVALID_TOKEN;
+
 import com.jo2.server.auth.exception.AuthException;
 import com.jo2.server.auth.jwt.JwtTokenProvider;
 import com.jo2.server.auth.jwt.JwtValidationType;
@@ -26,7 +28,8 @@ public class MemberIdHeaderResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Long resolveArgument(@NotNull MethodParameter parameter, ModelAndViewContainer modelAndViewContainer, @NotNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public Long resolveArgument(@NotNull MethodParameter parameter, ModelAndViewContainer modelAndViewContainer,
+                                @NotNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         if (request.getMethod().equals("OPTIONS")) {

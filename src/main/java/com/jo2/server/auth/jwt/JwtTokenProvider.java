@@ -87,6 +87,8 @@ public class JwtTokenProvider {
             return JwtValidationType.UNSUPPORTED_JWT_TOKEN;
         } catch (IllegalArgumentException ex) {
             return JwtValidationType.EMPTY_JWT;
+        }catch (Exception e){
+            throw new AuthException(ErrorCode.INVALID_TOKEN);
         }
     }
 
