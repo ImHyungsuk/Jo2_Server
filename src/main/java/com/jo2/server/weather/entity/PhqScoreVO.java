@@ -1,32 +1,29 @@
 package com.jo2.server.weather.entity;
 
-import static com.jo2.server.weather.message.ErrorCode.RANGE_EXCEPTION;
-
 import com.jo2.server.weather.exception.WeatherException;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static com.jo2.server.weather.message.ErrorCode.RANGE_EXCEPTION;
 
 @Embeddable
 @NoArgsConstructor
 @Getter
-public class ScoreVO {
+public class PhqScoreVO {
 
-    private int score;
+    private int phqscore;
 
     public static final int MIN_NUMBER = 0;
-    public static final int MAX_NUMBER = 100;
+    public static final int MAX_NUMBER = 36;
 
-    public ScoreVO(int score) {
+    public PhqScoreVO(int score) {
         validateNumberIsInRange(score);
-        this.score = score;
+        this.phqscore = score;
     }
 
-    public static ScoreVO from(int score) {
-        return new ScoreVO(score);
+    public static PhqScoreVO from(int score) {
+        return new PhqScoreVO(score);
     }
 
     private void validateNumberIsInRange(int number) {
