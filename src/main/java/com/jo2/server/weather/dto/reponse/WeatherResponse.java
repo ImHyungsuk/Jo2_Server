@@ -14,7 +14,7 @@ public record WeatherResponse(
         String date
 ) {
     public static WeatherResponse from(WeatherVO weatherVO) {
-        LocalDateTime dateTime = weatherVO.dateTime();
+        LocalDateTime dateTime = weatherVO.createdAt();
         return WeatherResponse.builder()
                 .scoreVO(weatherVO.scoreVO())
                 .result(weatherVO.result())

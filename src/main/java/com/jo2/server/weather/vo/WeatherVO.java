@@ -16,14 +16,14 @@ public record WeatherVO(
         @NonNull ScoreVO scoreVO,
         @NonNull PhqScoreVO phqScoreVO,
         @NonNull String result,
-        @NonNull LocalDateTime dateTime
+        @NonNull LocalDateTime createdAt
 ) {
     public static WeatherVO from(Weather weather) {
         return WeatherVO.builder()
                 .scoreVO(weather.getScoreVO())
                 .phqScoreVO(weather.getPhqScoreVO())
                 .result(weather.getResult())
-                .dateTime(weather.getCreatedAt())
+                .createdAt(weather.getCreatedAt())
                 .build();
     }
 }
