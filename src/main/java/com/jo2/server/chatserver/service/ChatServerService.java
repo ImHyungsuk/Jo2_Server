@@ -15,6 +15,7 @@ import com.jo2.server.weather.adapter.WeatherFinder;
 import com.jo2.server.weather.entity.Weather;
 import com.jo2.server.weather.exception.WeatherException;
 import com.jo2.server.weather.message.ErrorCode;
+import com.jo2.server.weather.vo.WeatherVO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ChatserverService {
+public class ChatServerService {
 
     private final ChatserverClient chatserverClient;
     private final MemberFinder memberFinder;
@@ -35,20 +36,20 @@ public class ChatserverService {
     private final AnalysisFinder analysisFinder;
     private final AnalysisSaver analysisSaver;
 
-    public ChatserverStartResponse startChatserver(Long memberId) {
+    public ChatserverStartResponse startChatServer(Long memberId) {
         return chatserverClient.startServer(ChatServerStartRequest.from(memberId.intValue()));
     }
 
     @Transactional
     public AnalysisResponse getAnalysis(long memberId) {
         Member member = memberFinder.findById(memberId);
-        List<Weather> weatherList = weatherFinder.findAllById(memberId);
+        List<WeatherVO> weatherList = weatherFinder.findAllById(memberId);
         Optional<Analysis> optionalAnalysis = analysisFinder.findAnalysisByMemberId(memberId);
         AnalysisResponse response;
-        Long recentweatherId;
+        Long recentWeatherId;
 
         try {
-            recentweatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
+            recentWeatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
         } catch (Exception e){
             log.info(String.valueOf(e));
             throw new WeatherException(ErrorCode.NO_WEATHER_EXCEPTION);
@@ -56,13 +57,13 @@ public class ChatserverService {
 
         if (optionalAnalysis.isPresent()) {
             Analysis analysis = optionalAnalysis.get();
-            if (analysis.getWeatherId() != recentweatherId) {
+            if (analysis.getWeatherId() != recentWeatherId) {
                 String result = requestAnalysis(weatherList);
-                analysis.updateResult(result,recentweatherId);
+                analysis.updateResult(result,recentWeatherId);
             }
         } else {
             String result = requestAnalysis(weatherList);
-            analysisSaver.createAnalysis(member,recentweatherId, result);
+            analysisSaver.createAnalysis(member,recentWeatherId, result);
         }
         Analysis analysis = analysisFinder.findAnalysisByMemberId(memberId).get();
         response = AnalysisResponse.from(analysis.getResult());

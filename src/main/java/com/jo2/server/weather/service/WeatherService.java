@@ -9,7 +9,7 @@ import com.jo2.server.weather.dto.reponse.RecentWeatherResponse;
 import com.jo2.server.weather.dto.reponse.WeatherCreateResponse;
 import com.jo2.server.weather.dto.request.WeatherCreateRequest;
 import com.jo2.server.weather.entity.Weather;
-import java.time.LocalDate;
+import com.jo2.server.weather.vo.WeatherVO;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +29,9 @@ public class WeatherService {
 
     public RecentWeatherResponse getRecentWeather(long memberId) {
         log.info("접속 멤버 아이디: " + memberId);
-        Optional<Weather> weather = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId);
+        Optional<WeatherVO> weather = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId);
         if (weather.isPresent()) {
-            int score = weather.get().getScoreVO().getScore();
+            int score = weather.get().scoreVO().getScore();
             return RecentWeatherResponse.from(score);
         } else {
             return RecentWeatherResponse.from(0);
@@ -40,7 +40,7 @@ public class WeatherService {
 
     public AllWeatherResponse getAllWeather(long memberId) {
         log.info("접속 멤버 아이디: " + memberId);
-        List<Weather> weatherList = weatherFinder.findAllById(memberId);
+        List<WeatherVO> weatherList = weatherFinder.findAllById(memberId);
         return AllWeatherResponse.from(weatherList);
     }
 
@@ -48,7 +48,7 @@ public class WeatherService {
     public WeatherCreateResponse createWeather(WeatherCreateRequest weatherCreateRequest) {
         Member member = memberFinder.findById(weatherCreateRequest.userId());
         Weather weather = weatherSaver.save(Weather.of(member, weatherCreateRequest.overallScore(), weatherCreateRequest.phq9Score(),
-                weatherCreateRequest.overallAnalyze(), LocalDate.now()));
+                weatherCreateRequest.overallAnalyze()));
         return WeatherCreateResponse.from(weather.getId());
     }
 }
