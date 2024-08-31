@@ -1,7 +1,5 @@
 package com.jo2.server.common.resolver.member;
 
-import static com.jo2.server.auth.message.ErrorCode.INVALID_TOKEN;
-
 import com.jo2.server.auth.exception.AuthException;
 import com.jo2.server.auth.jwt.JwtTokenProvider;
 import com.jo2.server.auth.jwt.JwtValidationType;
