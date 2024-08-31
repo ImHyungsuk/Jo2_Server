@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum VideoLink {
-    FIRST("https://www.youtube.com/watch?v=63lwpjJaCj0", "리롤 카타 입니다"),
-    SECOND("https://www.youtube.com/watch?v=QB_ZCtVuQx4","리롤 워윅 덱 가자"),
-    THIRD("https://www.youtube.com/watch?v=kDN3OjFPhco","고벨류 라이즈로 갑시다"),
-    FORTH("https://www.youtube.com/watch?v=8KYpGh_-GF8","행운에 뇌가 절여짐"),
-    FIFTH("https://www.youtube.com/watch?v=oUzRA1KDsTU","아르카나 제라수우우")
+    FIRST("https://youtu.be/ENf6DQu5M4g?si=gRw-uNLMxnOlHbfB", "우울증 환자가 '이것'을 꼭 해야 하는 이유"),
+    SECOND("https://youtu.be/Vd_XfWaFieM?si=7yNOCvFxAZBaLgrT","우울증 관리하며 살아갑니다"),
+    THIRD("https://www.youtube.com/watch?v=B8oRH3PBbyg","정신과 의사가 말하는 가장 좋은 위로 방법"),
+    FORTH("https://www.youtube.com/watch?v=6VEnTQ2rx_4","지치고 힘든 당신에게 위로가 되는 드라마속 명대사"),
+    FIFTH("https://www.youtube.com/watch?v=JzZ-Whd_HsU","청소년 우울증에 대처하는 방법?")
     ;
     private final String link;
     private final String title;
