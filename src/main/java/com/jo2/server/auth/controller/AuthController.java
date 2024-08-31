@@ -27,8 +27,7 @@ public class AuthController {
     @PostMapping("/sign-in")
     public ResponseEntity<SuccessResponse<SignInGetResponse>> signIn(
             @RequestParam final String authorizationCode,
-            @RequestBody final UserSignInRequest signInRequest,
-            HttpServletResponse httpServletResponse
+            @RequestBody final UserSignInRequest signInRequest
     ){
         SignInGetResponse response = authService.create(authorizationCode,signInRequest);
         return ResponseEntity.ok().body(success(SUCCESS_SIGN_IN_INFOR.getMessage(), response));
