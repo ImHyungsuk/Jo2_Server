@@ -2,27 +2,25 @@ package com.jo2.server.chatserver.service;
 
 import com.jo2.server.analysis.adapter.AnalysisFinder;
 import com.jo2.server.analysis.adapter.AnalysisSaver;
-import com.jo2.server.analysis.dto.AnalysisResponse;
+import com.jo2.server.analysis.dto.response.AnalysisResponse;
 import com.jo2.server.analysis.entity.Analysis;
-import com.jo2.server.chatserver.client.ChatserverClient;
-import com.jo2.server.chatserver.client.dto.ChatServerAnalysisRequest;
-import com.jo2.server.chatserver.dto.request.ChatServerStartRequest;
-import com.jo2.server.chatserver.dto.response.ChatserverAnalysisResponse;
+import com.jo2.server.chatserver.client.AnalysisRequester;
+import com.jo2.server.chatserver.dto.response.AnalysisResultResponse;
 import com.jo2.server.chatserver.dto.response.ChatserverStartResponse;
+import com.jo2.server.chatserver.dto.response.ExistAnalysisResultResponse;
+import com.jo2.server.chatserver.dto.response.NewAnalysisResultResponse;
+import com.jo2.server.chatserver.exception.ChatserverException;
+import com.jo2.server.chatserver.message.ErrorCode;
 import com.jo2.server.member.adapter.MemberFinder;
 import com.jo2.server.member.entity.Member;
 import com.jo2.server.weather.adapter.WeatherFinder;
-import com.jo2.server.weather.entity.Weather;
-import com.jo2.server.weather.exception.WeatherException;
-import com.jo2.server.weather.message.ErrorCode;
 import com.jo2.server.weather.vo.WeatherVO;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -30,49 +28,41 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ChatServerService {
 
-    private final ChatserverClient chatserverClient;
+    private final AnalysisRequester analysisRequester;
     private final MemberFinder memberFinder;
     private final WeatherFinder weatherFinder;
-    private final AnalysisFinder analysisFinder;
     private final AnalysisSaver analysisSaver;
-
+    private final AnalysisFinder analysisFinder;
     public ChatserverStartResponse startChatServer(Long memberId) {
-        return chatserverClient.startServer(ChatServerStartRequest.from(memberId.intValue()));
+        return analysisRequester.startChatServer(memberId);
     }
 
     @Transactional
     public AnalysisResponse getAnalysis(long memberId) {
-        Member member = memberFinder.findById(memberId);
-        List<WeatherVO> weatherList = weatherFinder.findAllById(memberId);
-        Optional<Analysis> optionalAnalysis = analysisFinder.findAnalysisByMemberId(memberId);
-        AnalysisResponse response;
-        Long recentWeatherId;
-
-        try {
-            recentWeatherId = weatherFinder.findTopByMemberIdOrderByCreatedAtDesc(memberId).get().getId();
-        } catch (Exception e){
-            log.info(String.valueOf(e));
-            throw new WeatherException(ErrorCode.NO_WEATHER_EXCEPTION);
-        }
-
-        if (optionalAnalysis.isPresent()) {
-            Analysis analysis = optionalAnalysis.get();
-            if (analysis.getWeatherId() != recentWeatherId) {
-                String result = requestAnalysis(weatherList);
-                analysis.updateResult(result,recentWeatherId);
-            }
-        } else {
-            String result = requestAnalysis(weatherList);
-            analysisSaver.createAnalysis(member,recentWeatherId, result);
-        }
-        Analysis analysis = analysisFinder.findAnalysisByMemberId(memberId).get();
-        response = AnalysisResponse.from(analysis.getResult());
-        return response;
+        AnalysisResultResponse result = getResult(memberId);
+        Analysis analysis = createOrUpdateAnalysis(result, memberId);
+        return AnalysisResponse.from(analysis.getResult());
     }
 
-    private String requestAnalysis(List<Weather> weatherList){
-        ChatserverAnalysisResponse analysisResponse = chatserverClient.analysis(
-                ChatServerAnalysisRequest.from(weatherList));
-        return analysisResponse.result();
+    private AnalysisResultResponse getResult(long memberId) {
+        List<WeatherVO> weatherVOList = weatherFinder.findAllById(memberId);
+        Optional<Analysis> optionalAnalysis = analysisFinder.findAnalysisByMemberId(memberId);
+        return analysisRequester.requestAnalysis(weatherVOList,optionalAnalysis);
+    }
+
+    private Analysis createOrUpdateAnalysis(AnalysisResultResponse result, long memberId) {
+        Member member = memberFinder.findById(memberId);
+        Analysis analysis;
+        if(result instanceof NewAnalysisResultResponse){
+            analysis = Analysis.of(member, ((NewAnalysisResultResponse) result).result());
+            analysisSaver.createAnalysis(analysis);
+            return analysis;
+        }
+        if(result instanceof ExistAnalysisResultResponse resultResponse){
+            analysis = resultResponse.analysis();
+            analysis.updateResult(resultResponse.result());
+            return analysis;
+        }
+        throw new ChatserverException(ErrorCode.NONE_EXIST_DATA);
     }
 }
