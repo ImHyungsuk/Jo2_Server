@@ -4,10 +4,9 @@ import com.jo2.server.weather.entity.Weather;
 import java.util.List;
 
 public record ChatServerAnalysisRequest(
-        long user_id,
         List<Weather> weatherList
 ) {
-    public static ChatServerAnalysisRequest of(Long user_id, List<Weather> weatherList) {
-        return new ChatServerAnalysisRequest(user_id, weatherList);
+    public static ChatServerAnalysisRequest of(List<Weather> weatherList) {
+        return new ChatServerAnalysisRequest(weatherList);
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public record  WeatherCreateRequest(
         int userId,
         int overallScore,
+        int phq9Score,
         String overallAnalyze
 ) {
 }
