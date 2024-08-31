@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum VideoLink {
-    FIRST("https://youtu.be/ENf6DQu5M4g?si=gRw-uNLMxnOlHbfB", "우울증 환자가 '이것'을 꼭 해야 하는 이유"),
-    SECOND("https://youtu.be/Vd_XfWaFieM?si=7yNOCvFxAZBaLgrT","우울증 관리하며 살아갑니다"),
+    FIRST("https://www.youtube.com/watch?v=ENf6DQu5M4g", "우울증 환자가 '이것'을 꼭 해야 하는 이유"),
+    SECOND("https://www.youtube.com/watch?v=JzZ-Whd_HsU","우울증 관리하며 살아갑니다"),
     THIRD("https://www.youtube.com/watch?v=B8oRH3PBbyg","정신과 의사가 말하는 가장 좋은 위로 방법"),
     FORTH("https://www.youtube.com/watch?v=6VEnTQ2rx_4","지치고 힘든 당신에게 위로가 되는 드라마속 명대사"),
     FIFTH("https://www.youtube.com/watch?v=JzZ-Whd_HsU","청소년 우울증에 대처하는 방법?")
