@@ -57,11 +57,11 @@ public class ChatserverService {
         if (optionalAnalysis.isPresent()) {
             Analysis analysis = optionalAnalysis.get();
             if (analysis.getWeatherId() != recentweatherId) {
-                String result = requestAnalysis(memberId,weatherList);
+                String result = requestAnalysis(weatherList);
                 analysis.updateResult(result,recentweatherId);
             }
         } else {
-            String result = requestAnalysis(memberId,weatherList);
+            String result = requestAnalysis(weatherList);
             analysisSaver.createAnalysis(member,recentweatherId, result);
         }
         Analysis analysis = analysisFinder.findAnalysisByMemberId(memberId).get();
@@ -69,9 +69,9 @@ public class ChatserverService {
         return response;
     }
 
-    private String requestAnalysis(long memberId, List<Weather> weatherList){
+    private String requestAnalysis(List<Weather> weatherList){
         ChatserverAnalysisResponse analysisResponse = chatserverClient.analysis(
-                ChatServerAnalysisRequest.of(memberId, weatherList));
+                ChatServerAnalysisRequest.of(weatherList));
         return analysisResponse.result();
     }
 }

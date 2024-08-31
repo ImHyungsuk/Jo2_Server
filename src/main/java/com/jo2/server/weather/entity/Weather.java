@@ -31,6 +31,9 @@ public class Weather extends BaseTime {
     @Embedded
     private ScoreVO scoreVO;
 
+    @Embedded
+    private PhqScoreVO phqScoreVO;
+
     private DayOfWeek dayOfWeek;
 
     private String result;
@@ -38,12 +41,14 @@ public class Weather extends BaseTime {
     public static Weather of(
             Member member,
             int score,
+            int phqscore,
             String result,
             LocalDate localDate
     ) {
         return Weather.builder()
                 .member(member)
                 .scoreVO(ScoreVO.from(score))
+                .phqScoreVO(PhqScoreVO.from(phqscore))
                 .dayOfWeek(localDate.getDayOfWeek())
                 .result(result)
                 .build();
