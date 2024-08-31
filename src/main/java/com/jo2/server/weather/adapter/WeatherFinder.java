@@ -17,6 +17,6 @@ public class WeatherFinder {
     }
 
     public List<WeatherVO> findAllById(long memberId) {
-        return weatherRepository.findAllByMemberId(memberId);
+        return weatherRepository.findByMemberIdOrderByCreatedAtDesc(memberId);
     }
 }
