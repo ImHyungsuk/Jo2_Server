@@ -33,6 +33,7 @@ public class ChatServerService {
     private final WeatherFinder weatherFinder;
     private final AnalysisSaver analysisSaver;
     private final AnalysisFinder analysisFinder;
+
     public ChatserverStartResponse startChatServer(Long memberId) {
         return analysisRequester.startChatServer(memberId);
     }
