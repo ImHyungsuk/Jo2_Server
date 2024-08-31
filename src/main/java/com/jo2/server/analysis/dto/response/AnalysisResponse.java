@@ -1,4 +1,4 @@
-package com.jo2.server.analysis.dto;
+package com.jo2.server.analysis.dto.response;
 
 public record AnalysisResponse(
         String result
