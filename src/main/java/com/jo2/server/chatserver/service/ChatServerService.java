@@ -40,9 +40,9 @@ public class ChatServerService {
 
     @Transactional
     public AnalysisResponse getAnalysis(long memberId) {
-        AnalysisResultResponse result = getResult(memberId);
-        Analysis analysis = createOrUpdateAnalysis(result, memberId);
-        return AnalysisResponse.from(analysis.getResult());
+        AnalysisResultResponse requestResult = getResult(memberId);
+        String analysisResult = createOrUpdateAnalysis(requestResult, memberId);
+        return AnalysisResponse.from(analysisResult);
     }
 
     private AnalysisResultResponse getResult(long memberId) {
@@ -51,19 +51,19 @@ public class ChatServerService {
         return analysisRequester.requestAnalysis(weatherVOList,optionalAnalysis);
     }
 
-    private Analysis createOrUpdateAnalysis(AnalysisResultResponse result, long memberId) {
+    private String createOrUpdateAnalysis(AnalysisResultResponse result, long memberId) {
         Member member = memberFinder.findById(memberId);
         Analysis analysis;
         if(result instanceof NewAnalysisResultResponse resultResponse){
             analysis = Analysis.of(member, resultResponse.result());
             analysisSaver.createAnalysis(analysis);
-            return analysis;
+            return analysis.getResult();
         }
         if(result instanceof ExistAnalysisResultResponse resultResponse){
             analysis = resultResponse.analysis();
             analysis.updateResult(resultResponse.result());
-            return analysis;
+            return analysis.getResult();
         }
-        throw new ChatserverException(ErrorCode.NONE_EXIST_DATA);
+        throw new ChatserverException(ErrorCode.INVALID_DATA_TYPE);
     }
 }
