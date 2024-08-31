@@ -10,10 +10,12 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,7 +24,7 @@ import org.springframework.util.StringUtils;
 public class JwtTokenProvider {
 
     private static final String MEMBER_ID = "memberId";
-    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 1000L;
+    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000L;
     private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 24 * 1000L * 14;
 
     @Value("${jwt.secret}")
@@ -87,7 +89,7 @@ public class JwtTokenProvider {
             return JwtValidationType.UNSUPPORTED_JWT_TOKEN;
         } catch (IllegalArgumentException ex) {
             return JwtValidationType.EMPTY_JWT;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new AuthException(ErrorCode.INVALID_TOKEN);
         }
     }
