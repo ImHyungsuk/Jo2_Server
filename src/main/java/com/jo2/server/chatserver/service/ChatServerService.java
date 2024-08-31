@@ -54,8 +54,8 @@ public class ChatServerService {
     private Analysis createOrUpdateAnalysis(AnalysisResultResponse result, long memberId) {
         Member member = memberFinder.findById(memberId);
         Analysis analysis;
-        if(result instanceof NewAnalysisResultResponse){
-            analysis = Analysis.of(member, ((NewAnalysisResultResponse) result).result());
+        if(result instanceof NewAnalysisResultResponse resultResponse){
+            analysis = Analysis.of(member, resultResponse.result());
             analysisSaver.createAnalysis(analysis);
             return analysis;
         }
