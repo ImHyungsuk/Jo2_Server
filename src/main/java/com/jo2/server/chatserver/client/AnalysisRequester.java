@@ -17,10 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-@Getter
 @Component
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnalysisRequester {
