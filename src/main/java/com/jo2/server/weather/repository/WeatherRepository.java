@@ -13,6 +13,5 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
     @Query("SELECT w FROM Weather w WHERE w.member.id = :memberId ORDER BY w.createdAt DESC")
     Optional<WeatherVO> findTopByMemberIdOrderByCreatedAtDesc(@Param("memberId") Long memberId);
 
-    List<WeatherVO> findAllByMemberId(Long memberId);
-
+    List<WeatherVO> findByMemberIdOrderByCreatedAtDesc (Long memberId);
 }
