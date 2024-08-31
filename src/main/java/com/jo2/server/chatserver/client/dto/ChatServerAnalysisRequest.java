@@ -4,9 +4,9 @@ import com.jo2.server.weather.entity.Weather;
 import java.util.List;
 
 public record ChatServerAnalysisRequest(
-        List<Weather> weatherList
+        List<WeatherAnalysisVO> weatherList
 ) {
-    public static ChatServerAnalysisRequest of(List<Weather> weatherList) {
-        return new ChatServerAnalysisRequest(weatherList);
+    public static ChatServerAnalysisRequest from(List<Weather> weatherList) {
+        return new ChatServerAnalysisRequest(weatherList.stream().map(WeatherAnalysisVO::from).toList());
     }
 }

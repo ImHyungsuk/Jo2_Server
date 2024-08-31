@@ -71,7 +71,7 @@ public class ChatserverService {
 
     private String requestAnalysis(List<Weather> weatherList){
         ChatserverAnalysisResponse analysisResponse = chatserverClient.analysis(
-                ChatServerAnalysisRequest.of(weatherList));
+                ChatServerAnalysisRequest.from(weatherList));
         return analysisResponse.result();
     }
 }
