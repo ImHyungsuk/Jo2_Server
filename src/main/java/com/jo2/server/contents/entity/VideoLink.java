@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum VideoLink {
+    //유튜브 제목은 30자 이하
     FIRST("https://www.youtube.com/watch?v=ENf6DQu5M4g", "우울증 환자가 '이것'을 꼭 해야 하는 이유"),
     SECOND("https://www.youtube.com/watch?v=JzZ-Whd_HsU","우울증 관리하며 살아갑니다"),
     THIRD("https://www.youtube.com/watch?v=B8oRH3PBbyg","정신과 의사가 말하는 가장 좋은 위로 방법"),
