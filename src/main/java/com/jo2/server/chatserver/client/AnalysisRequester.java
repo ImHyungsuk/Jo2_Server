@@ -39,7 +39,7 @@ public class AnalysisRequester {
             }
         }
         ChatServerAnalysisResponse analysisResponse = requestAnalysis(weatherVOList);
-        return NewAnalysisResultResponse.from(analysisResponse.result());
+        return NewAnalysisResultResponse.from(analysisResponse.summary());
     }
 
     private void checkBeforeRequest(List<WeatherVO> weatherVOList) {

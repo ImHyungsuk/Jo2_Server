@@ -48,7 +48,7 @@ public class WeatherService {
     public WeatherCreateResponse createWeather(WeatherCreateRequest weatherCreateRequest) {
         Member member = memberFinder.findById(weatherCreateRequest.userId());
         Weather weather = weatherSaver.save(Weather.of(member, weatherCreateRequest.overallScore(), weatherCreateRequest.phq9Score(),
-                weatherCreateRequest.overallAnalyze()));
+                weatherCreateRequest.summary()));
         return WeatherCreateResponse.from(weather.getId());
     }
 }

@@ -22,6 +22,7 @@ public class Analysis extends BaseTime {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(length = 500)
     private String result;
 
     public static Analysis of(
