@@ -30,7 +30,7 @@ public class ScoreVO {
     }
 
     private void validateNumberIsInRange(int number) {
-        if (number <= MIN_NUMBER || number >= MAX_NUMBER) {
+        if (number < MIN_NUMBER || number > MAX_NUMBER) {
             throw new WeatherException(RANGE_EXCEPTION);
         }
     }
