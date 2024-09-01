@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum SuccessMessage {
     SUCCESS_GET_RECENT_RESULT("최근 날씨 불러오기 성공"),
+    SUCCESS_CREATE_WEATHER("날씨 생성 성공"),
     SUCCESS_GET_ALL_RESULT("전체 날씨 불러오기 성공");
 
     private final String message;

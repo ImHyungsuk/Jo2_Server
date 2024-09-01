@@ -1,6 +1,7 @@
 package com.jo2.server.weather.controller;
 
 import static com.jo2.server.common.dto.SuccessResponse.success;
+import static com.jo2.server.weather.message.SuccessMessage.SUCCESS_CREATE_WEATHER;
 import static com.jo2.server.weather.message.SuccessMessage.SUCCESS_GET_ALL_RESULT;
 import static com.jo2.server.weather.message.SuccessMessage.SUCCESS_GET_RECENT_RESULT;
 
@@ -36,7 +37,7 @@ public class WeatherController {
     public ResponseEntity<SuccessResponse<WeatherCreateResponse>> createWeather(
             @RequestBody WeatherCreateRequest weatherCreateRequest) {
         WeatherCreateResponse response = weatherService.createWeather(weatherCreateRequest);
-        return ResponseEntity.ok().body(success(SUCCESS_GET_RECENT_RESULT.getMessage(), response));
+        return ResponseEntity.ok().body(success(SUCCESS_CREATE_WEATHER.getMessage(), response));
     }
 
     @GetMapping("/recent")

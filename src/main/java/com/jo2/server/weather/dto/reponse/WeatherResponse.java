@@ -18,7 +18,7 @@ public record WeatherResponse(
         return WeatherResponse.builder()
                 .scoreVO(weatherVO.scoreVO())
                 .result(weatherVO.result())
-                .date(dateTime.getYear() + "." + dateTime.getMonth() + "." + dateTime.getDayOfMonth())
+                .date(dateTime.getYear() + "." + dateTime.getMonthValue() + "." + dateTime.getDayOfMonth())
                 .build();
     }
 }
