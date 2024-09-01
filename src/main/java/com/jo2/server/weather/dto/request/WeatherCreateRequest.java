@@ -4,6 +4,6 @@ public record  WeatherCreateRequest(
         int userId,
         int overallScore,
         int phq9Score,
-        String overallAnalyze
+        String summary
 ) {
 }
